@@ -34,11 +34,11 @@ public partial class StateMachine : Entity
 	{
 		base.Spawn();
 		Transmit = TransmitType.Always;
+		Event.Register( this );
 	}
-
-	public override void Simulate( IClient cl )
+	[Event.Tick.Server]
+	public virtual void Tick()
 	{
-		base.Simulate( cl );
 		CurrentState?.OnTick();
 		CurrentState?.CheckSwitchState();
 	}

@@ -1,0 +1,31 @@
+@using Party;
+@using Party.Player;
+@namespace Party.UI
+@attribute [StyleSheet("/UI/Hud.scss")]
+@inherits RootPanel
+
+<root>
+    <div class="PlayerInfo">
+        @foreach (var item in Game.Clients)
+        {
+            if (item.Pawn is PartyPlayer player)
+            {
+                <PlayerDisplay Player=@player />
+            }
+        }
+    </div>
+</root>
+
+
+@code {
+    int lastamount = 0;
+    protected override int BuildHash()
+    {
+        if (lastamount != Game.Clients.Count)
+        {
+            lastamount = Game.Clients.Count;
+            return -100;
+        }
+        return Game.Clients.GetHashCode();
+    }
+}

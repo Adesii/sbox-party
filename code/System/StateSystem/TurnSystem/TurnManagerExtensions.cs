@@ -1,4 +1,6 @@
-namespace Party.StateSystem;
+using Party.StateSystem;
+
+namespace Party;
 
 public static class TurnManagerExtensions
 {

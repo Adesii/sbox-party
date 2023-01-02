@@ -20,6 +20,11 @@ public partial class TurnStateMachine : StateMachine
 			{
 				TurnIndex = 0;
 			}
+			if ( !TurnOrder[TurnIndex].IsValid() )
+			{
+				TurnOrder.RemoveAt( TurnIndex );
+				return CurrentTurn;
+			}
 			return TurnOrder[TurnIndex];
 		}
 	}
@@ -45,9 +50,9 @@ public partial class TurnStateMachine : StateMachine
 		SetState( nameof( WaitState ) );
 	}
 
-	public override void Simulate( IClient cl )
+	public override void Tick()
 	{
-		base.Simulate( cl );
+		base.Tick();
 		if ( !Debug.Enabled )
 			return;
 		DebugOverlay.ScreenText( $"TurnStateMachine: {CurrentTurn?.Name}, State: {CurrentState}", 15 );

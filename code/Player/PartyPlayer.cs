@@ -21,23 +21,27 @@ public partial class PartyPlayer : Entity
 		CurrentField = FieldManager.GetField<StartField>();
 		ControllingPawn = new()
 		{
-			Transform = CurrentField.Transform
+			Transform = CurrentField.Transform,
+			Parent = this
 		};
-
-
-
-
 		Components.Create<PlayerFollowCamera>();
+	}
+
+	public override void OnKilled()
+	{
+		base.OnKilled();
+		ControllingPawn?.Delete();
 	}
 
 	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
+		if ( !cl.IsAuthority ) return;
 		if ( ControllingPawn.IsValid() )
 		{
 			ControllingPawn.DressUp( cl );
 		}
-		if ( Game.IsServer && Client.HasTurn() && PartyGame.CurrentState.GetType() == typeof( TurnState ) )
+		if ( Game.IsServer && cl.HasTurn() && PartyGame.CurrentState.GetType() == typeof( TurnState ) )
 		{
 			FieldManager.Move( this, Game.Random.Int( 1, 4 ) );
 		}

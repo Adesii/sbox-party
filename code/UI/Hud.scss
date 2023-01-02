@@ -1,0 +1,14 @@
+Hud{
+    pointer-events: all;
+    position: absolute;
+}
+
+.PlayerInfo{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 400px;
+    height: 100%;
+    flex-direction: column;
+    padding: 10px;
+}

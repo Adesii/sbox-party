@@ -30,6 +30,12 @@ public partial class PartyGame : GameManager, IStateMachine<TurnStateMachine>
 		FieldManager.InitField();
 	}
 
+	public override void ClientSpawn()
+	{
+		Game.RootPanel?.Delete( true );
+		Game.RootPanel = new UI.Hud();
+	}
+
 	[ConCmd.Server]
 	public static void StartGame()
 	{
@@ -52,11 +58,21 @@ public partial class PartyGame : GameManager, IStateMachine<TurnStateMachine>
 	{
 		FieldManager.InitField();
 	}
+	[ConCmd.Server]
+	public static void KickBots()
+	{
+		foreach ( var client in Game.Clients )
+		{
+			if ( client.IsBot )
+			{
+				client.Kick();
+			}
+		}
+	}
 
 	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
-		StateMachine.Simulate( cl );
 
 		if ( !Debug.Enabled )
 			return;

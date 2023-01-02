@@ -44,7 +44,7 @@ public partial class MoveState : BaseState<TurnStateMachine>
 	public BaseField Final;
 	public override void OnTick()
 	{
-		if ( Game.IsClient || Path.Count == 0 ) return;
+		if ( Game.IsClient || Path.Count == 0 || (!PawnToMove?.IsAuthority ?? false) ) return;
 
 
 		//DebugDraw Path
@@ -66,7 +66,7 @@ public partial class MoveState : BaseState<TurnStateMachine>
 		{
 			if ( player.Position.Distance( field.Position ) > 10 )
 			{
-				player.Position += (field.Position - player.Position).Normal * 50 * Time.Delta;
+				player.Position += (field.Position - player.Position).Normal * 200 * Time.Delta;
 				player.Rotation = Rotation.LookAt( field.Position.WithZ( 0 ) - player.Position.WithZ( 0 ) );
 			}
 			else

@@ -1,0 +1,39 @@
+@using Party;
+@using Party.Player;
+@namespace Party.UI
+@attribute [StyleSheet("UI/PlayerInfo/PlayerDisplay.scss")]
+@inherits Panel
+
+<root>
+    <div class="PlayerIcon">
+        <img class="Avatar" @ref=Avatar />
+    </div>
+    <div class="PlayerTab">
+        <label class="PlayerName" text=@Player.Client.Name />
+        <div class="CounterGroup">
+            <div class="Counter">
+                <div class="Icon">key</div>
+                <label class="Amount" text=@Game.Random.Int(1,50) />
+            </div>
+            <div class="Counter">
+                <div class="Icon">monetization_on</div>
+                <label class="Amount" text=@Game.Random.Int(1,500) />
+            </div>
+
+        </div>
+    </div>
+</root>
+
+@code {
+    public PartyPlayer Player { get; set; }
+    public Image Avatar { get; set; }
+
+    public override void Tick()
+    {
+        SetClass("HasTurn", Player?.Client?.HasTurn() ?? false);
+        if (Avatar.IsValid())
+        {
+            Avatar.Texture = Texture.LoadAvatar(Player.Client.SteamId);
+        }
+    }
+}
