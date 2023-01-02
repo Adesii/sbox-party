@@ -34,7 +34,6 @@ public partial class StateMachine : Entity
 	{
 		base.Spawn();
 		Transmit = TransmitType.Always;
-		Event.Register( this );
 	}
 	[Event.Tick.Server]
 	public virtual void Tick()
