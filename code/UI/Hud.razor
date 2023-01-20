@@ -18,14 +18,9 @@
 
 
 @code {
-    int lastamount = 0;
+
     protected override int BuildHash()
     {
-        if (lastamount != Game.Clients.Count)
-        {
-            lastamount = Game.Clients.Count;
-            return -100;
-        }
-        return Game.Clients.GetHashCode();
+        return Game.Clients.Count.GetHashCode();
     }
 }
