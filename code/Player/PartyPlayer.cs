@@ -13,6 +13,18 @@ public partial class PartyPlayer : Entity
 	[Net]
 	public PartyPawn ControllingPawn { get; set; }
 
+	public CameraMode Camera
+	{
+		get => Components.Get<CameraMode>();
+		set
+		{
+			Components.RemoveAny<CameraMode>();
+			Components.Add( value );
+		}
+	}
+
+	public override Ray AimRay => new( ControllingPawn.Position + Vector3.Up * 64, ControllingPawn.Rotation.Forward );
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -24,7 +36,6 @@ public partial class PartyPlayer : Entity
 			Transform = CurrentField.Transform,
 			Parent = this
 		};
-		Components.Create<PlayerFollowCamera>();
 	}
 
 	public override void OnKilled()
@@ -40,10 +51,6 @@ public partial class PartyPlayer : Entity
 		if ( ControllingPawn.IsValid() )
 		{
 			ControllingPawn.DressUp( cl );
-		}
-		if ( Game.IsServer && cl.HasTurn() && PartyGame.CurrentState.GetType() == typeof( TurnState ) )
-		{
-			FieldManager.Move( this, Game.Random.Int( 1, 4 ) );
 		}
 	}
 

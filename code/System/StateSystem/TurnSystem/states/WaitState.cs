@@ -13,7 +13,7 @@ public partial class WaitState : PredictedBaseState<TurnStateMachine>
 
 	public override void CheckSwitchState()
 	{
-		if ( CreationTime > 1 )
+		if ( CreationTime > 0.2 )
 		{
 			StateMachine.TurnIndex += 1 % StateMachine.TurnOrder.Count;
 			StateMachine.TurnFinished = false;

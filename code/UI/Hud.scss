@@ -1,6 +1,10 @@
 Hud{
     pointer-events: all;
     position: absolute;
+
+    &.NoMouse{
+        pointer-events: none;
+    }
 }
 
 .PlayerInfo{

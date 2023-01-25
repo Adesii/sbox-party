@@ -1,3 +1,4 @@
+@import "UI/_variables.scss";
 PlayerDisplay {
     margin-top: 20px;
     transition: all 0.5s;
@@ -12,6 +13,7 @@ PlayerDisplay {
         min-width: 96px;
         min-height: 96px;
         z-index: 10;
+        left: -1vw;
         .Avatar{
             background-position: center;
             background-repeat: no-repeat;
@@ -29,11 +31,8 @@ PlayerDisplay {
         align-items: flex-end;
 
         .PlayerName{
-            background-color: rgba(0, 0, 0, 0.267);
+            background-color: rgba($BackgroundColor,0.479);
             font-size: 20px;
-            font-weight: bold;
-            font-family: Poppins;
-            color: white;
             border-radius: 10px;
             //text-align: center;
             z-index: -10;
@@ -50,15 +49,11 @@ PlayerDisplay {
             align-items: center;
             .Counter{
                 margin: 10px;
-                font-size: 30px;
-                font-weight: bold;
-                font-family: Poppins;
-                color: white;
                 border-radius: 20px;
                 flex-grow: 1;
                 align-items: center;
     
-                .Icon{
+                label{
                     font-family: "Material Icons";
                     font-size: 40px;
                     color: yellow;
@@ -79,7 +74,7 @@ PlayerDisplay {
     &.HasTurn{
         transform: translateX(-25px);
         .PlayerName{
-            background-color: rgba(0, 225, 255, 0.479);
+            background-color: rgba($HighlightColor,0.479);
         }
     }
    

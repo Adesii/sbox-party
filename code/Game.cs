@@ -70,9 +70,27 @@ public partial class PartyGame : GameManager, IStateMachine<TurnStateMachine>
 		}
 	}
 
+	[ConCmd.Server]
+	public static void SetTurnState( string state )
+	{
+		Current.StateMachine.SetState( state );
+	}
+	public static void ForceCamera( Type cameraMode )
+	{
+		if ( !Game.IsServer ) return;
+
+		foreach ( var item in Game.Clients )
+		{
+
+			(item.Pawn as PartyPlayer).Camera = TypeLibrary.Create<CameraMode>( cameraMode );
+		}
+	}
+
 	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
+
+		StateMachine?.Simulate( cl );
 
 		if ( !Debug.Enabled )
 			return;
@@ -99,5 +117,6 @@ public partial class PartyGame : GameManager, IStateMachine<TurnStateMachine>
 			tx.Position += Vector3.Up * 50.0f;
 			pawn.Transform = tx;
 		}
+		pawn.Camera = new PlayerFollowCamera();
 	}
 }

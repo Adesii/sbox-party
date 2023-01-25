@@ -62,4 +62,10 @@ public partial class FieldManager : Entity
 
 		PartyGame.Current.StateMachine.SetState<MoveState>();
 	}
+	[ConCmd.Server]
+	public static void MoveOnServer( int Amount )
+	{
+		//if ( ConsoleSystem.Caller != PartyGame.Current.CurrentTurnIClient ) return;
+		Move( PartyGame.Current.CurrentTurnIClient.Pawn as PartyPlayer, Amount );
+	}
 }

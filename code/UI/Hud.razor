@@ -1,5 +1,6 @@
 @using Party;
 @using Party.Player;
+@using Party.StateSystem;
 @namespace Party.UI
 @attribute [StyleSheet("/UI/Hud.scss")]
 @inherits RootPanel
@@ -14,6 +15,8 @@
             }
         }
     </div>
+
+    <SelectionRoot />
 </root>
 
 
@@ -22,5 +25,10 @@
     protected override int BuildHash()
     {
         return Game.Clients.Count.GetHashCode();
+    }
+
+    public override void Tick()
+    {
+        SetClass("NoMouse", PartyGame.CurrentState.GetType().Name == typeof(DiceState).Name);
     }
 }

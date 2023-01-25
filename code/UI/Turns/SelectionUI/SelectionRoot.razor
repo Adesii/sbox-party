@@ -1,0 +1,39 @@
+@using Party;
+@using Party.Player;
+@using Party.StateSystem;
+@using Party.StateSystem;
+@using Party.System.PlayField;
+@namespace Party.UI
+@attribute [StyleSheet("UI/Turns/SelectionUI/SelectionRoot.scss")]
+@inherits Panel
+
+
+<root>
+    <div class="SelectionGroup">
+        <SelectionItem Text="Roll" @onclick=@Roll />
+        <SelectionItem Text="Items" @onclick=@Items />
+        <SelectionItem Text="Map" @onclick=@Map />
+    </div>
+</root>
+
+@code {
+
+    public override void Tick()
+    {
+        SetClass("Hide", PartyGame.CurrentState.GetType() != typeof(TurnState));
+    }
+    public void Roll()
+    {
+        PartyGame.SetTurnState(typeof(DiceState).Name);
+    }
+
+    public void Items()
+    {
+        Log.Info("Items");
+    }
+
+    public void Map()
+    {
+        Log.Info("Map");
+    }
+}

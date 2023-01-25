@@ -22,6 +22,8 @@ public partial class MoveState : BaseState<TurnStateMachine>
 			Final = Path.Last();
 			Player.CurrentField = Final;
 		}
+
+		PartyGame.ForceCamera( typeof( PlayerFollowCamera ) );
 	}
 
 	public override void OnExit()

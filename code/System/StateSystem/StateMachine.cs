@@ -47,6 +47,12 @@ public partial class StateMachine : Entity
 		base.FrameSimulate( cl );
 	}
 
+	public override void Simulate( IClient cl )
+	{
+		base.Simulate( cl );
+		CurrentState?.Simulate( cl );
+	}
+
 	public virtual void SetState<T>() where T : BaseState
 	{
 		SetState( typeof( T ).Name );
